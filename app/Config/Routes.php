@@ -28,5 +28,5 @@ $routes->post('Admin/BarangMasuk/tambah', 'Admin\BarangMasuk::tambah');
 $routes->get('Admin/BarangMasuk/delete/(:num)', 'Admin\BarangMasuk::delete/$1');
 
 //routes Barang Keluar
-$routes->post('Admin/BarangMasuk/tambah', 'Admin\BarangMasuk::tambah');
-$routes->get('Admin/BarangMasuk/delete/(:num)', 'Admin\BarangMasuk::delete/$1');
+$routes->post('Admin/BarangKeluar/tambah', 'Admin\BarangKeluar::tambah');
+$routes->get('Admin/BarangKeluar/delete/(:num)', 'Admin\BarangKeluar::delete/$1');

@@ -13,4 +13,9 @@ class M_Kategori extends Model
     {
         return $this->findAll(); // Mengambil semua data dari tabel satuan
     }
+    public function getKategoriByBarang($id_barang)
+{
+    return $this->where('id_barang', $id_barang)->findAll();
+}
+
 }

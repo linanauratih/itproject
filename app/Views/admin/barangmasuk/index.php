@@ -14,10 +14,10 @@
                         <form action="<?= base_url('Admin/BarangMasuk/tambah') ?>" method="post">
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Barang</label>
-                                <select class="form-select" id="nama" name="id_barang" required>
+                                <select class="form-select" id="nama" name="nama" required>
                                     <option value="">Pilih Barang</option>
                                     <?php foreach ($barang as $bar): ?>
-                                        <option value="<?= $bar['id_barang'] ?>"><?= $bar['nama'] ?></option>
+                                        <option value="<?= $bar['nama'] ?>"><?= $bar['nama'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -34,6 +34,33 @@
                             <div class="mb-3">
                                 <label for="tanggal" class="form-label">Tanggal Masuk</label>
                                 <input type="date" id="tanggal" name="tanggal" value="<?= date('Y-m-d') ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="satuan" class="form-label">Satuan</label>
+                                <select class="form-select" id="satuan" name="satuan" required>
+                                    <option value="">Pilih Satuan</option>
+                                    <?php foreach ($satuan as $item): ?>
+                                        <option value="<?= $item['id_satuan'] ?>"><?= $item['satuan'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kategori" class="form-label">Kategori</label>
+                                <select class="form-select" id="kategori" name="kategori" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <?php foreach ($kategori as $item): ?>
+                                        <option value="<?= $item['id_kategori'] ?>"><?= $item['kategori'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="merk" class="form-label">Merk</label>
+                                <select class="form-select" id="merk" name="merk" required>
+                                    <option value="">Pilih Merk</option>
+                                    <?php foreach ($merk as $item): ?>
+                                        <option value="<?= $item['id_merk'] ?>"><?= $item['merk'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                     </div>
 
@@ -69,6 +96,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Jumlah Stok</th>
+                                <th>Harga Beli</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Satuan</th>
                                 <th>Kategori</th>
@@ -87,6 +115,9 @@
                                     </td>
                                     <td>
                                         <?= $row['jumlah_stok'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $row['harga_beli'] ?>
                                     </td>
                                     <td>
                                         <?= $row['tanggal'] ?>
@@ -108,7 +139,7 @@
                                         </a>
 
                                         <!-- Tombol Hapus -->
-                                        <a href="<?= base_url('Admin/BarangMasuk/delete/' . $row['id_barang']) ?>"
+                                        <a href="<?= base_url('Admin/BarangMasuk/delete/' . $row['id_masuk']) ?>"
                                             class="btn btn-danger btn-sm"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
                                             title="Hapus">

@@ -46,14 +46,14 @@ class BarangMasuk extends BaseController
 }
 public function tambah()
 {
-    // Ambil data dari formulir
-    $nama_barang = $this->request->getPost('id_barang');
+    // Ambil data 
+    $nama_barang = $this->request->getPost('nama');
     $jumlah = $this->request->getPost('jumlah_stok');
-    $tanggal = $this->request->getPost('tanggal');
     $harga_beli = $this->request->getPost('harga_beli');
+    $tanggal = $this->request->getPost('tanggal');
     
     // Validasi data
-    if (empty($nama_barang) || empty($jumlah) || empty($tanggal) || empty($harga_beli)) {
+    if (empty($nama_barang) || empty($jumlah) || empty($harga_beli) || empty($tanggal)) {
         session()->setFlashdata('error', 'Semua field harus diisi.');
         return redirect()->to(base_url('barangmasuk'));
     }
@@ -75,8 +75,8 @@ public function tambah()
     $data = [
         'id_barang' => $id_barang,
         'jumlah_stok' => $jumlah,
-        'tanggal' => $tanggal,
         'harga_beli' => $harga_beli,
+        'tanggal' => $tanggal,
     ];
 
     // Pastikan data tidak kosong sebelum insert
@@ -90,12 +90,45 @@ public function tambah()
         session()->setFlashdata('success', 'Data berhasil ditambahkan.');
 
         // Redirect ke halaman yang sesuai
-        return redirect()->to(base_url('barang'));
+        return redirect()->to(base_url('barangmasuk'));
     } else {
         session()->setFlashdata('error', 'Data tidak valid.');
         return redirect()->to(base_url('barangmasuk'));
     }
 }
+public function getDataByBarang($id_barang)
+{
+    $barang = $this->barangModel->getBarangById($id_barang);
+    $data['satuan'] = $this->satuanModel->getSatuanByBarang($id_barang);
+    $data['merk'] = $this->merkModel->getMerkByBarang($id_barang);
+    $data['kategori'] = $this->kategoriModel->getKategoriByBarang($id_barang);
+
+    return $data;
+}
+public function detail($id_barang)
+    {
+        $barangModel = new M_Barang();
+        $barang = $barangModel->find($id_barang);
+
+        // Pastikan $barang tidak null
+        if ($barang) {
+            // Mengambil informasi detail lainnya
+            $satuan = $barang['satuan'];
+            $merk = $barang['merk'];
+            $kategori = $barang['kategori'];
+
+            // Menampilkan informasi di view
+            return view('barang/detail', [
+                'barang' => $barang,
+                'satuan' => $satuan,
+                'merk' => $merk,
+                'kategori' => $kategori
+            ]);
+        } else {
+            // Barang tidak ditemukan, tampilkan pesan error atau redirect ke halaman lain
+            return redirect()->to('barangmasuk');
+        }
+    }
 
 public function edit()
 {
@@ -142,7 +175,7 @@ public function edit()
 }
     public function delete($id)
     {
-        $this->model->deleteBarangMasuk($id);
+        $this->model->hapus($id);
         return redirect()->to('barangmasuk');
     }
 }

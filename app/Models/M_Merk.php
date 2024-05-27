@@ -13,4 +13,8 @@ class M_Merk extends Model
     {
         return $this->findAll(); // Mengambil semua data dari tabel satuan
     }
+    public function getMerkByBarang($id_barang)
+    {
+        return $this->where('id_barang', $id_barang)->findAll();
+    }
 }

@@ -7,7 +7,7 @@ class M_BarangKeluar extends Model
 {
     protected $table = 'barang_keluar';
     protected $primaryKey = 'id_keluar';
-    protected $allowedFields = ['jumlah_stok', 'tanggal','id_barang','id_satuan', 'id_merk', 'id_kategori'];
+    protected $allowedFields = ['jumlah_stok', 'tanggal', 'harga_jual','id_barang','id_satuan', 'id_merk', 'id_kategori'];
 
     public function getdata()
     {
@@ -42,7 +42,7 @@ class M_BarangKeluar extends Model
     }
     
 
-    public function deleteBarangMasuk($id)
+    public function hapus($id)
     {
         return $this->delete($id);
     }

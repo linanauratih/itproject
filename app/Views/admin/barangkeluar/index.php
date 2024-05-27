@@ -95,10 +95,11 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Jumlah Stok</th>
+                                <th>Harga Jual</th>
                                 <th>Tanggal Masuk</th>
-                                <th>Satuan</th>
+                                <!-- <th>Satuan</th>
                                 <th>Kategori</th>
-                                <th>Merk</th>
+                                <th>Merk</th> -->
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -115,9 +116,12 @@
                                         <?= $row['jumlah_stok'] ?>
                                     </td>
                                     <td>
-                                        <?= $row['tanggal'] ?>
+                                        <?= $row['harga_jual'] ?>
                                     </td>
                                     <td>
+                                        <?= $row['tanggal'] ?>
+                                    </td>
+                                    <!-- <td>
                                         <?= $row['nama_satuan'] ?>
                                     </td>
                                     <td>
@@ -125,7 +129,7 @@
                                     </td>
                                     <td>
                                         <?= $row['nama_merk'] ?>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <!-- Tombol Edit -->
                                         <a href="#" class="btn btn-primary btn-sm" title="Edit" data-bs-toggle="modal"
@@ -134,7 +138,7 @@
                                         </a>
 
                                         <!-- Tombol Hapus -->
-                                        <a href="<?= base_url('Admin/BarangKeluar/delete/' . $row['id_barang']) ?>"
+                                        <a href="<?= base_url('Admin/BarangKeluar/delete/' . $row['id_keluar']) ?>"
                                             class="btn btn-danger btn-sm"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
                                             title="Hapus">

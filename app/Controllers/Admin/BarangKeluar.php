@@ -134,7 +134,7 @@ public function edit()
 }
     public function delete($id)
     {
-        $this->model->deleteBarangMasuk($id);
-        return redirect()->to('barangmasuk');
+        $this->model->hapus($id);
+        return redirect()->to('barangkeluar');
     }
 }
