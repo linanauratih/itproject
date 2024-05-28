@@ -107,7 +107,7 @@ public function edit($id_barang)
     }
 
     // Ambil data dari formulir (jika diperlukan)
-    $nama = $this->request->getPost('nama');
+    $nama = $this->request->getPost('edit_nama');
     $jumlah = $this->request->getPost('jumlah_stok');
     $harga = $this->request->getPost('harga');
     $id_satuan = $this->request->getPost('satuan');
@@ -158,9 +158,21 @@ public function edit($id_barang)
 }
 
 
-    public function delete($id)
-    {
-        $this->model->deleteStok($id);
-        return redirect()->to('barang');
+public function delete($id)
+{
+    // Panggil model untuk menghapus data stok
+    $deleted = $this->model->deleteStok($id);
+
+    if ($deleted) {
+        // Jika data berhasil dihapus, atur flash data untuk pesan sukses
+        session()->setFlashdata('success', 'Data berhasil dihapus.');
+    } else {
+        // Jika terjadi kesalahan dalam penghapusan, atur flash data untuk pesan error
+        session()->setFlashdata('error', 'Gagal menghapus data.');
     }
+
+    // Redirect kembali ke halaman daftar barang
+    return redirect()->to('barang');
+}
+
 }

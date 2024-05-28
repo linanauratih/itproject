@@ -75,6 +75,17 @@
             <h2 class="mt-4">
                 <?= $title ?>
             </h2>
+            <?php
+            // Tampilkan pesan error jika ada
+            if (session()->has('error')) {
+                echo '<div class="alert alert-danger">' . session('error') . '</div>';
+            }
+
+            // Tampilkan pesan sukses jika ada
+            if (session()->has('success')) {
+                echo '<div class="alert alert-success">' . session('success') . '</div>';
+            }
+            ?>
             <a href="#" class="btn btn-primary" title="Tambah" data-bs-toggle="modal" data-bs-target="#tambahModal">
                 Tambah Data
             </a>

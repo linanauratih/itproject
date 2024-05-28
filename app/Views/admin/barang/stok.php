@@ -65,12 +65,21 @@
                 </div>
             </div>
         </div>
-
-
         <div class="container-fluid px-4">
             <h2 class="mt-4">
                 <?= $title ?>
             </h2>
+            <?php
+            // Tampilkan pesan error jika ada
+            if (session()->has('error')) {
+                echo '<div class="alert alert-danger">' . session('error') . '</div>';
+            }
+
+            // Tampilkan pesan sukses jika ada
+            if (session()->has('success')) {
+                echo '<div class="alert alert-success">' . session('success') . '</div>';
+            }
+            ?>
             <a href="#" class="btn btn-primary" title="Tambah" data-bs-toggle="modal" data-bs-target="#tambahModal">
                 Tambah Data
             </a>
@@ -126,7 +135,6 @@
                                             data-id="<?= $row['id_barang'] ?>">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-
                                         <!-- Tombol Hapus -->
                                         <a href="<?= base_url('Admin/Stok/delete/' . $row['id_barang']) ?>"
                                             class="btn btn-danger btn-sm"
@@ -163,7 +171,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="edit_jumlah_stok" class="form-label">Jumlah Stok</label>
-                                <input type="number" class="form-control" id="jumlah_stok" name="edit_jumlah_stok"
+                                <input type="number" class="form-control" id="jumlah_stok" name="jumlah_stok"
                                     value="<?= $row['jumlah_stok'] ?>" min="1" pattern="[1-9]\d*" required>
                             </div>
                             <div class="mb-3">
@@ -204,7 +212,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <input type="submit" class="btn btn-primary" value="Simpan">
                     </div>
                     </form>
                 </div>

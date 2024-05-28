@@ -79,6 +79,17 @@
             <a href="#" class="btn btn-primary" title="Tambah" data-bs-toggle="modal" data-bs-target="#tambahModal">
                 Tambah Data
             </a>
+            <?php
+            // Tampilkan pesan error jika ada
+            if (session()->has('error')) {
+                echo '<div class="alert alert-danger">' . session('error') . '</div>';
+            }
+
+            // Tampilkan pesan sukses jika ada
+            if (session()->has('success')) {
+                echo '<div class="alert alert-success">' . session('success') . '</div>';
+            }
+            ?>
             <button type="button" id="tombolCetak" class="btn btn-warning" onclick="cetakPDF()">
                 Cetak PDF
             </button>
@@ -156,5 +167,38 @@
         </div>
 
 </div>
+
 </main>
+<script>
+$(document).ready(function() {
+    // Event handler untuk memanggil fungsi getBarangDetails saat nama barang dipilih
+    $('#nama_barang_dropdown').change(function() {
+        var namaBarang = $(this).val();
+        getBarangDetails(namaBarang);
+    });
+
+    // Fungsi untuk mengambil detail barang dengan AJAX
+    function getBarangDetails(namaBarang) {
+        $.ajax({
+            url: 'Admin/BarangMasuk/detail/', // Ganti dengan URL yang sesuai
+            type: 'GET',
+            data: { nama_barang: namaBarang },
+            success: function(response) {
+                // Perbarui nilai input dengan detail barang dari respons
+                $('#merk_input').val(response.merk);
+                $('#kategori_input').val(response.kategori);
+                $('#satuan_input').val(response.satuan);
+
+                // Kunci input kategori, merk, dan satuan
+                $('#kategori_input').prop('disabled', true);
+                $('#merk_input').prop('disabled', true);
+                $('#satuan_input').prop('disabled', true);
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+            }
+        });
+    }
+});
+</script>
 <?= $this->endSection() ?>

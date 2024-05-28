@@ -106,29 +106,33 @@ public function getDataByBarang($id_barang)
     return $data;
 }
 public function detail($id_barang)
-    {
-        $barangModel = new M_Barang();
-        $barang = $barangModel->find($id_barang);
+{
+    $barangModel = new M_Barang();
+    $barang = $barangModel->find($id_barang);
 
-        // Pastikan $barang tidak null
-        if ($barang) {
-            // Mengambil informasi detail lainnya
-            $satuan = $barang['satuan'];
-            $merk = $barang['merk'];
-            $kategori = $barang['kategori'];
+    // Pastikan $barang tidak null
+    if ($barang) {
+        // Mengambil informasi detail lainnya
+        $satuan = $barang['satuan'];
+        $merk = $barang['merk'];
+        $kategori = $barang['kategori'];
 
-            // Menampilkan informasi di view
-            return view('barang/detail', [
-                'barang' => $barang,
-                'satuan' => $satuan,
-                'merk' => $merk,
-                'kategori' => $kategori
-            ]);
-        } else {
-            // Barang tidak ditemukan, tampilkan pesan error atau redirect ke halaman lain
-            return redirect()->to('barangmasuk');
-        }
+        // Mengemas detail barang dalam format JSON
+        $detailBarang = [
+            'satuan' => $satuan,
+            'merk' => $merk,
+            'kategori' => $kategori
+        ];
+
+        // Mengirim respons dalam format JSON
+        return $this->response->setJSON($detailBarang);
+    } else {
+        // Barang tidak ditemukan, mengirim respons dengan status 404
+        return $this->response->setStatusCode(404)->setJSON(['error' => 'Barang tidak ditemukan']);
     }
+}
+
+
 
 public function edit()
 {
@@ -173,9 +177,20 @@ public function edit()
     // Redirect ke halaman yang sesuai, misalnya ke halaman daftar stok
     return redirect()->to(base_url('barangmasuk'));
 }
-    public function delete($id)
-    {
-        $this->model->hapus($id);
-        return redirect()->to('barangmasuk');
+public function delete($id)
+{
+    // Panggil model untuk menghapus data stok
+    $deleted = $this->model->hapus($id);
+
+    if ($deleted) {
+        // Jika data berhasil dihapus, atur flash data untuk pesan sukses
+        session()->setFlashdata('success', 'Data berhasil dihapus.');
+    } else {
+        // Jika terjadi kesalahan dalam penghapusan, atur flash data untuk pesan error
+        session()->setFlashdata('error', 'Gagal menghapus data.');
     }
+
+    // Redirect kembali ke halaman daftar barang
+    return redirect()->to('barangmasuk');
+}
 }

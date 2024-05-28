@@ -132,9 +132,20 @@ public function edit()
     // Redirect ke halaman yang sesuai, misalnya ke halaman daftar stok
     return redirect()->to(base_url('barangmasuk'));
 }
-    public function delete($id)
-    {
-        $this->model->hapus($id);
-        return redirect()->to('barangkeluar');
+public function delete($id)
+{
+    // Panggil model untuk menghapus data stok
+    $deleted = $this->model->hapus($id);
+
+    if ($deleted) {
+        // Jika data berhasil dihapus, atur flash data untuk pesan sukses
+        session()->setFlashdata('success', 'Data berhasil dihapus.');
+    } else {
+        // Jika terjadi kesalahan dalam penghapusan, atur flash data untuk pesan error
+        session()->setFlashdata('error', 'Gagal menghapus data.');
     }
+
+    // Redirect kembali ke halaman daftar barang
+    return redirect()->to('barangkeluar');
+}
 }
