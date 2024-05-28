@@ -129,12 +129,11 @@
                                         <?= $row['nama_merk'] ?>
                                     </td>
                                     <td>
-                                        <!-- Tombol Edit -->
                                         <a href="#" class="btn btn-primary btn-sm edit-btn" title="Edit"
-                                            data-bs-toggle="modal" data-bs-target="#editModal"
-                                            data-id="<?= $row['id_barang'] ?>">
+                                            data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id_barang'] ?>">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
+
                                         <!-- Tombol Hapus -->
                                         <a href="<?= base_url('Admin/Stok/delete/' . $row['id_barang']) ?>"
                                             class="btn btn-danger btn-sm"
@@ -145,6 +144,7 @@
                                     </td>
 
                                 </tr>
+
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -153,74 +153,75 @@
         </div>
 
         <!-- Edit Modal -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Data Barang</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <?php foreach ($barang as $key => $row): ?>
+            <div class="modal fade" id="editModal<?= $row['id_barang'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id_barang'] ?>">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit Data Barang</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form untuk mengedit data -->
+                            <form action="<?= base_url('Admin/Stok/edit/' . $row['id_barang']) ?>" method="post">
+                                <input type="hidden" name="id_barang" id="edit_id_barang">
+                                <div class="mb-3">
+                                    <label for="edit_nama" class="form-label">Nama Barang</label>
+                                    <input type="text" class="form-control" id="nama" name="edit_nama"
+                                        value="<?= $row['nama'] ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_jumlah_stok" class="form-label">Jumlah Stok</label>
+                                    <input type="number" class="form-control" id="jumlah_stok" name="jumlah_stok"
+                                        value="<?= $row['jumlah_stok'] ?>" min="1" pattern="[1-9]\d*" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_harga" class="form-label">Harga</label>
+                                    <input type="text" class="form-control" id="harga" name="edit_harga"
+                                        value="<?= $row['harga'] ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_satuan" class="form-label">Satuan</label>
+                                    <select class="form-select" id="edit_satuan" name="satuan" required>
+                                        <option value="<?= $row['nama_satuan'] ?>"><?= $row['nama_satuan'] ?></option>
+                                        <!-- Loop untuk menampilkan pilihan satuan dari database -->
+                                        <?php foreach ($satuan as $sat): ?>
+                                            <option value="<?= $sat['id_satuan'] ?>"><?= $sat['satuan'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_kategori" class="form-label">Kategori</label>
+                                    <select class="form-select" id="edit_kategori" name="kategori" required>
+                                        <option value="<?= $row['nama_kategori'] ?>"><?= $row['nama_kategori'] ?></option>
+                                        <!-- Loop untuk menampilkan pilihan kategori dari database -->
+                                        <?php foreach ($kategori as $kat): ?>
+                                            <option value="<?= $kat['id_kategori'] ?>"><?= $kat['kategori'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_merk" class="form-label">Merk</label>
+                                    <select class="form-select" id="edit_merk" name="merk" required>
+                                        <option value="<?= $row['nama_merk'] ?>"><?= $row['nama_merk'] ?></option>
+                                        <!-- Loop untuk menampilkan pilihan merk dari database -->
+                                        <?php foreach ($merk as $mrk): ?>
+                                            <option value="<?= $mrk['id_merk'] ?>"><?= $mrk['merk'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                        </form>
                     </div>
-                    <div class="modal-body">
-                        <!-- Form untuk mengedit data -->
-                        <form action="<?= base_url('Admin/Barang/edit') ?>" method="post">
-                            <input type="hidden" name="id_barang" id="edit_id_barang">
-                            <div class="mb-3">
-                                <label for="edit_nama" class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" id="nama" name="edit_nama"
-                                    value="<?= $row['nama'] ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_jumlah_stok" class="form-label">Jumlah Stok</label>
-                                <input type="number" class="form-control" id="jumlah_stok" name="jumlah_stok"
-                                    value="<?= $row['jumlah_stok'] ?>" min="1" pattern="[1-9]\d*" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_harga" class="form-label">Harga</label>
-                                <input type="text" class="form-control" id="harga" name="edit_harga"
-                                    value="<?= $row['harga'] ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_satuan" class="form-label">Satuan</label>
-                                <select class="form-select" id="edit_satuan" name="satuan" required>
-                                    <option value="<?= $row['nama_satuan'] ?>"><?= $row['nama_satuan'] ?></option>
-                                    <!-- Loop untuk menampilkan pilihan satuan dari database -->
-                                    <?php foreach ($satuan as $sat): ?>
-                                        <option value="<?= $sat['id_satuan'] ?>"><?= $sat['satuan'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_kategori" class="form-label">Kategori</label>
-                                <select class="form-select" id="edit_kategori" name="kategori" required>
-                                    <option value="<?= $row['nama_kategori'] ?>"><?= $row['nama_kategori'] ?></option>
-                                    <!-- Loop untuk menampilkan pilihan kategori dari database -->
-                                    <?php foreach ($kategori as $kat): ?>
-                                        <option value="<?= $kat['id_kategori'] ?>"><?= $kat['kategori'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit_merk" class="form-label">Merk</label>
-                                <select class="form-select" id="edit_merk" name="merk" required>
-                                    <option value="<?= $row['nama_merk'] ?>"><?= $row['nama_merk'] ?></option>
-                                    <!-- Loop untuk menampilkan pilihan merk dari database -->
-                                    <?php foreach ($merk as $mrk): ?>
-                                        <option value="<?= $mrk['id_merk'] ?>"><?= $mrk['merk'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <input type="submit" class="btn btn-primary" value="Simpan">
-                    </div>
-                    </form>
                 </div>
             </div>
-        </div>
-
+        <?php endforeach; ?>
     </main>
 
 </div>
-<script src="<?= base_url('js/edit_modal_script.js') ?>"></script>
+
 <?= $this->endSection() ?>

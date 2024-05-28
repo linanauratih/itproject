@@ -92,7 +92,6 @@ public function tambah()
     return redirect()->to(base_url('barang'));
 }
 
-
 public function edit($id_barang)
 {
     // Ambil data barang berdasarkan ID
