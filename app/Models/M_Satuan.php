@@ -19,5 +19,4 @@ public function getSatuanByBarang($id_barang)
     return $this->where('id_barang', $id_barang)->findAll();
 }
 
-
 }

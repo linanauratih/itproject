@@ -25,6 +25,7 @@ $routes->get('Admin/Stok/delete/(:num)', 'Admin\Stok::delete/$1');
 $routes->post('Admin/Stok/edit/(:num)', 'Admin\Stok::edit/$1');
 $routes->get('Admin/Stok/edit/(:num)', 'Admin\Stok::edit/$1');
 
+
 //routes Barang Masuk
 $routes->post('Admin/BarangMasuk/tambah', 'Admin\BarangMasuk::tambah');
 $routes->get('Admin/BarangMasuk/delete/(:num)', 'Admin\BarangMasuk::delete/$1');
